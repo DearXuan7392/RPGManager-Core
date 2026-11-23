@@ -493,6 +493,25 @@ function altExtensions(ext) {
 }
 
 // ---------------------------------------------------------------------------
+// 作弊载荷：页面脚本的源码放在 Core，由两端按需取用（Core 自身不执行）
+// ---------------------------------------------------------------------------
+
+const CHEAT_SCRIPTS = {
+  desktop: path.join('cheat', 'desktop.js'),
+  android: path.join('cheat', 'android.js')
+};
+
+function cheatScriptPath(platform) {
+  const rel = CHEAT_SCRIPTS[String(platform || '')];
+  if (!rel) throw new Error('未知的作弊载荷平台: ' + platform);
+  return path.join(__dirname, rel);
+}
+
+function readCheatScript(platform) {
+  return fs.readFileSync(cheatScriptPath(platform));
+}
+
+// ---------------------------------------------------------------------------
 // HTML 注入（纯字符串处理，不涉及宿主）
 // ---------------------------------------------------------------------------
 
@@ -565,5 +584,8 @@ module.exports = {
   altExtensions: altExtensions,
 
   buildInjectSnippet: buildInjectSnippet,
-  injectHtml: injectHtml
+  injectHtml: injectHtml,
+
+  cheatScriptPath: cheatScriptPath,
+  readCheatScript: readCheatScript
 };
