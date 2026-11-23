@@ -1,0 +1,10 @@
+{
+  "name": "rpgmanager-core",
+  "version": "1.0.0",
+  "description": "RPGManager 的公共核心：解密、扫描、元信息、批量任务、存档与资源规则",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}
